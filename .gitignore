@@ -92,7 +92,7 @@ ENV/
 *.csv
 *.wav
 *.mp3
-*.midi
+*.mid
 
 .metadata
 bin/
