@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# data
+*.csv
+*.wav
+*.mp3
+*.midi
