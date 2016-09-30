@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Induction</title>
+    <meta name="keywords" content="at.ofai.music.beatroot.Induction,Induction class" />
+    <meta name="generator" content="SinjDoc 0.5" />
+    <link href="../../../../stylesheet.css" rel="stylesheet" type="text/css" />
+    <link rel="Index" href="../../../../index-all.html" />
+    <link rel="Start" href="../../../../overview-summary.html" />
+    <link rel="Up" href="package-summary.html" />
+    <link rel="Help" href="../../../../help-doc.html" />
+  </head>
+  <body class="classPage bigframe">
+   <div class="navbar">
+    <p class="nav navtop">
+      <span class="over"><a href="../../../../overview-summary.html">Overview</a></span>
+      <span class="package"><a href="package-summary.html">Package</a></span>
+      <span class="class selected">Class</span>
+      <span class="use"><a href="class-use/Induction.html">Use</a></span>
+      <span class="tree"><a href="package-tree.html">Tree</a></span>
+      <span class="deprecated"><a href="../../../../deprecated-list.html">Deprecated</a></span>
+      <span class="index"><a href="../../../../index-all.html">Index</a></span>
+      <span class="help"><a href="../../../../help-doc.html">Help</a></span>
+    </p>
+    <p class="nav navmid">
+      <span class="prevnext">
+       <span class="prev">Prev Class</span>
+       <span class="next">Next Class</span>
+      </span>
+      <span class="framesel">
+       <span class="frames"><a href="../../../../index.html" target="_top">Frames</a></span>
+       <span class="noframes"><a href="Induction.html" target="_top">NoFrames</a></span>
+      </span>
+      <span class="allclasses"><a href="../../../../allclasses-noframe.html">All Classes</a></span>
+   </p>
+   <p class="nav navbot">
+      <span class="summary">Summary:
+       <span class="nested">Nested</span>
+       <span class="field"><a href="#field_summary">Field</a></span>
+       <span class="constr">Constr</span>
+       <span class="method"><a href="#method_summary">Method</a></span>
+      </span>
+      <span class="detail">Detail:
+       <span class="field"><a href="#field_detail">Field</a></span>
+       <span class="constr">Constr</span>
+       <span class="method"><a href="#method_detail">Method</a></span>
+      </span>
+   </p>
+    <div class="navtitle">
+     
+    </div>
+    <p class="clear"><!--empty--></p>
+   </div>
+   <p class="packageName">at.ofai.music.beatroot</p>
+   <h1>  Class  Induction</h1>
+<!--
+   <p class="enclosing">
+   Enclosing class/interface: @OUTER@
+   </p>
+-->
+
+
+   <!-- XXX class hierarchy diagram goes here -->
+<!--
+   
+   <p class="directSubclasses">
+   Direct known subclasses: @ALL_SUBCLASSES@
+   </p>
+-->
+
+
+   <p class="declaration">
+     class 
+   <span class="className">Induction</span>
+   
+   
+      
+      <span class="extends">extends Object</span>
+      
+      
+   
+   </p>
+
+   <div class="description">
+    Performs tempo induction by finding clusters of similar
+  inter-onset intervals (IOIs), ranking them according to the number
+  of intervals and relationships between them, and returning a set
+  of tempo hypotheses for initialising the beat tracking agents.
+   </div>
+
+
+
+
+   <table class="field_summary summary">
+     <tr><th colspan="2"><a name="field_summary" id="field_summary">Field Summary</a></th></tr>
+
+     <tr><td>static double</td><td><span class="memberName"><a href="#clusterWidth" class="fieldRef">clusterWidth</a></span><div class="memberDescription"> The maximum difference in IOIs which are in the same cluster</div></td></tr>
+
+
+
+     <tr><td>static boolean</td><td><span class="memberName"><a href="#debug" class="fieldRef">debug</a></span><div class="memberDescription"> Flag to enable debugging output</div></td></tr>
+
+
+
+     <tr><td>static double</td><td><span class="memberName"><a href="#maxIBI" class="fieldRef">maxIBI</a></span><div class="memberDescription"> The maximum inter-beat interval (IBI), i.e. the minimum tempo
+  hypothesis that can be returned.
+  </div></td></tr>
+
+
+
+     <tr><td>static double</td><td><span class="memberName"><a href="#maxIOI" class="fieldRef">maxIOI</a></span><div class="memberDescription"> The maximum IOI for inclusion in a cluster</div></td></tr>
+
+
+
+     <tr><td>static double</td><td><span class="memberName"><a href="#minIBI" class="fieldRef">minIBI</a></span><div class="memberDescription"> The minimum inter-beat interval (IBI), i.e. the maximum tempo
+  hypothesis that can be returned.
+  </div></td></tr>
+
+
+
+     <tr><td>static double</td><td><span class="memberName"><a href="#minIOI" class="fieldRef">minIOI</a></span><div class="memberDescription"> The minimum IOI for inclusion in a cluster</div></td></tr>
+
+
+
+     <tr><td>static int</td><td><span class="memberName"><a href="#topN" class="fieldRef">topN</a></span><div class="memberDescription"> The maximum number of tempo hypotheses to return</div></td></tr>
+
+   </table>
+
+
+
+
+
+   <table class="method_summary summary">
+     <tr><th colspan="2"><a name="method_summary" id="method_summary">Method Summary</a></th></tr>
+
+     <tr><td>static  <a href="AgentList.html" class="classRef">AgentList</a></td><td><span class="memberName"><a href="#beatInduction(at.ofai.music.util.EventList)" class="methodRef">beatInduction</a>(EventList events)</span><div class="memberDescription"> Performs tempo induction (see JNMR 2001 paper by Simon Dixon for details).</div></td></tr>
+
+
+
+     <tr><td>static  void</td><td><span class="memberName"><a href="#newInduction(at.ofai.music.util.EventList)" class="methodRef">newInduction</a>(EventList events)</span><div class="memberDescription"> An alternative (incomplete) tempo induction method (not used).
+  </div></td></tr>
+
+
+
+     <tr><td>protected static  int</td><td><span class="memberName"><a href="#top(int)" class="methodRef">top</a>(int low)</span><div class="memberDescription"> For variable cluster widths in newInduction().</div></td></tr>
+
+   </table>
+
+
+
+<!--
+   <p class="inherited">
+    <span class="header">Methods inherited from class java.util.<a
+   href="AbstractCollection.html">AbstractCollection</a></span>
+    <a href="#addAll">addAll</a>
+    <a href="#contains">contains</a>
+   </p>
+   <p class="inherited">
+    <span class="header">Methods inherited from class java.lang.<a
+   href="Object.html">Object</a></span>
+    <a href="#addAll">clone</a>
+    <a href="#contains">finalize</a>
+   </p>
+   <p class="inherited">
+    <span class="header">Methods inherited from interface java.util.<a
+   href="List.html">List</a></span>
+    <a href="#addAll">addAll</a>
+    <a href="#contains">contains</a>
+   </p>
+-->
+
+
+
+   <h2><a name="field_detail" id="field_detail">Field Detail</a></h2>
+
+   <h3><a name="clusterWidth" id="clusterWidth">clusterWidth</a></h3>
+   <div class="memberName">public static double clusterWidth</div>
+   <div class="memberDescription"> The maximum difference in IOIs which are in the same cluster</div>
+
+
+   <h3><a name="debug" id="debug">debug</a></h3>
+   <div class="memberName">public static boolean debug</div>
+   <div class="memberDescription"> Flag to enable debugging output</div>
+
+
+   <h3><a name="maxIBI" id="maxIBI">maxIBI</a></h3>
+   <div class="memberName">public static double maxIBI</div>
+   <div class="memberDescription"> The maximum inter-beat interval (IBI), i.e. the minimum tempo
+  hypothesis that can be returned.
+  1.00 seconds ==  60 BPM
+  0.75 seconds ==  80 BPM
+  0.60 seconds == 100 BPM</div>
+
+
+   <h3><a name="maxIOI" id="maxIOI">maxIOI</a></h3>
+   <div class="memberName">public static double maxIOI</div>
+   <div class="memberDescription"> The maximum IOI for inclusion in a cluster</div>
+
+
+   <h3><a name="minIBI" id="minIBI">minIBI</a></h3>
+   <div class="memberName">public static double minIBI</div>
+   <div class="memberDescription"> The minimum inter-beat interval (IBI), i.e. the maximum tempo
+  hypothesis that can be returned.
+  0.30 seconds == 200 BPM
+  0.25 seconds == 240 BPM</div>
+
+
+   <h3><a name="minIOI" id="minIOI">minIOI</a></h3>
+   <div class="memberName">public static double minIOI</div>
+   <div class="memberDescription"> The minimum IOI for inclusion in a cluster</div>
+
+
+   <h3><a name="topN" id="topN">topN</a></h3>
+   <div class="memberName">public static int topN</div>
+   <div class="memberDescription"> The maximum number of tempo hypotheses to return</div>
+
+
+
+
+
+
+   <h2><a name="method_detail" id="method_detail">Method Detail</a></h2>
+
+   <h3><a name="beatInduction(at.ofai.music.util.EventList)" id="beatInduction(at.ofai.music.util.EventList)">beatInduction</a></h3>
+   <div class="memberName">public static  <a href="AgentList.html" class="classRef">AgentList</a> beatInduction(EventList events)</div>
+   <div class="memberDescription"> Performs tempo induction (see JNMR 2001 paper by Simon Dixon for details).<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">events The onsets (or other events) from which the tempo is induced</span> </p>
+<p class="tag tag_return"><span class="tagName">Returns:</span> <span class="tagContents">A list of beat tracking agents, where each is initialised with one
+          of the top tempo hypotheses but no beats</span> </p>
+</div>
+
+
+   <h3><a name="newInduction(at.ofai.music.util.EventList)" id="newInduction(at.ofai.music.util.EventList)">newInduction</a></h3>
+   <div class="memberName">public static  void newInduction(EventList events)</div>
+   <div class="memberDescription"> An alternative (incomplete) tempo induction method (not used).
+  Uses integer (millisecond) resolution.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">events The events on which tempo induction is performed</span> </p>
+</div>
+
+
+   <h3><a name="top(int)" id="top(int)">top</a></h3>
+   <div class="memberName">protected static  int top(int low)</div>
+   <div class="memberDescription"> For variable cluster widths in newInduction().<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">low The lowest IOI allowed in the cluster</span> </p>
+<p class="tag tag_return"><span class="tagName">Returns:</span> <span class="tagContents">The highest IOI allowed in the cluster</span> </p>
+</div>
+
+   
+   <div class="navbar">
+    <p class="nav navtop">
+      <span class="over"><a href="../../../../overview-summary.html">Overview</a></span>
+      <span class="package"><a href="package-summary.html">Package</a></span>
+      <span class="class selected">Class</span>
+      <span class="use"><a href="class-use/Induction.html">Use</a></span>
+      <span class="tree"><a href="package-tree.html">Tree</a></span>
+      <span class="deprecated"><a href="../../../../deprecated-list.html">Deprecated</a></span>
+      <span class="index"><a href="../../../../index-all.html">Index</a></span>
+      <span class="help"><a href="../../../../help-doc.html">Help</a></span>
+    </p>
+    <p class="nav navmid">
+      <span class="prevnext">
+       <span class="prev">Prev Class</span>
+       <span class="next">Next Class</span>
+      </span>
+      <span class="framesel">
+       <span class="frames"><a href="../../../../index.html" target="_top">Frames</a></span>
+       <span class="noframes"><a href="Induction.html" target="_top">NoFrames</a></span>
+      </span>
+      <span class="allclasses"><a href="../../../../allclasses-noframe.html">All Classes</a></span>
+   </p>
+   <p class="nav navbot">
+      <span class="summary">Summary:
+       <span class="nested">Nested</span>
+       <span class="field"><a href="#field_summary">Field</a></span>
+       <span class="constr">Constr</span>
+       <span class="method"><a href="#method_summary">Method</a></span>
+      </span>
+      <span class="detail">Detail:
+       <span class="field"><a href="#field_detail">Field</a></span>
+       <span class="constr">Constr</span>
+       <span class="method"><a href="#method_detail">Method</a></span>
+      </span>
+   </p>
+    <div class="navtitle">
+     
+    </div>
+    <p class="clear"><!--empty--></p>
+   </div>
+   <div class="bottom"></div>
+   </body>
+</html>

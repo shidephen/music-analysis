@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>AudioPlayer</title>
+    <meta name="keywords" content="at.ofai.music.beatroot.AudioPlayer,AudioPlayer class" />
+    <meta name="generator" content="SinjDoc 0.5" />
+    <link href="../../../../stylesheet.css" rel="stylesheet" type="text/css" />
+    <link rel="Index" href="../../../../index-all.html" />
+    <link rel="Start" href="../../../../overview-summary.html" />
+    <link rel="Up" href="package-summary.html" />
+    <link rel="Help" href="../../../../help-doc.html" />
+  </head>
+  <body class="classPage bigframe">
+   <div class="navbar">
+    <p class="nav navtop">
+      <span class="over"><a href="../../../../overview-summary.html">Overview</a></span>
+      <span class="package"><a href="package-summary.html">Package</a></span>
+      <span class="class selected">Class</span>
+      <span class="use"><a href="class-use/AudioPlayer.html">Use</a></span>
+      <span class="tree"><a href="package-tree.html">Tree</a></span>
+      <span class="deprecated"><a href="../../../../deprecated-list.html">Deprecated</a></span>
+      <span class="index"><a href="../../../../index-all.html">Index</a></span>
+      <span class="help"><a href="../../../../help-doc.html">Help</a></span>
+    </p>
+    <p class="nav navmid">
+      <span class="prevnext">
+       <span class="prev">Prev Class</span>
+       <span class="next">Next Class</span>
+      </span>
+      <span class="framesel">
+       <span class="frames"><a href="../../../../index.html" target="_top">Frames</a></span>
+       <span class="noframes"><a href="AudioPlayer.html" target="_top">NoFrames</a></span>
+      </span>
+      <span class="allclasses"><a href="../../../../allclasses-noframe.html">All Classes</a></span>
+   </p>
+   <p class="nav navbot">
+      <span class="summary">Summary:
+       <span class="nested">Nested</span>
+       <span class="field"><a href="#field_summary">Field</a></span>
+       <span class="constr"><a href="#constructor_summary">Constr</a></span>
+       <span class="method"><a href="#method_summary">Method</a></span>
+      </span>
+      <span class="detail">Detail:
+       <span class="field"><a href="#field_detail">Field</a></span>
+       <span class="constr"><a href="#constructor_detail">Constr</a></span>
+       <span class="method"><a href="#method_detail">Method</a></span>
+      </span>
+   </p>
+    <div class="navtitle">
+     
+    </div>
+    <p class="clear"><!--empty--></p>
+   </div>
+   <p class="packageName">at.ofai.music.beatroot</p>
+   <h1>  Class  AudioPlayer</h1>
+<!--
+   <p class="enclosing">
+   Enclosing class/interface: @OUTER@
+   </p>
+-->
+
+
+   <!-- XXX class hierarchy diagram goes here -->
+<!--
+   
+   <p class="implementedInterfaces">
+   All implemented interfaces: @ALL_SUPERINTERFACES@
+   </p>
+   
+   <p class="directSubclasses">
+   Direct known subclasses: @ALL_SUBCLASSES@
+   </p>
+-->
+
+
+   <p class="declaration">public
+     class 
+   <span class="className">AudioPlayer</span>
+   
+   
+      
+      <span class="extends">extends Object</span>
+      
+      
+        <span class="implements">implements Runnable</span>
+      
+   
+   </p>
+
+   <div class="description">
+   
+   </div>
+
+
+
+
+   <table class="field_summary summary">
+     <tr><th colspan="2"><a name="field_summary" id="field_summary">Field Summary</a></th></tr>
+
+     <tr><td>protected SourceDataLine</td><td><span class="memberName"><a href="#audioOut" class="fieldRef">audioOut</a></span><div class="memberDescription"> The object to which audio output is written</div></td></tr>
+
+
+
+     <tr><td>protected int</td><td><span class="memberName"><a href="#beatIndex" class="fieldRef">beatIndex</a></span><div class="memberDescription"> The index in beats[] of the next beat (relative to the current playback position</div></td></tr>
+
+
+
+     <tr><td>protected long[]</td><td><span class="memberName"><a href="#beats" class="fieldRef">beats</a></span><div class="memberDescription"> The positions in samples of beats for playback of audio with click marking beat times</div></td></tr>
+
+
+
+     <tr><td>protected int[][]</td><td><span class="memberName"><a href="#click" class="fieldRef">click</a></span><div class="memberDescription"> An array of percussion sounds</div></td></tr>
+
+
+
+     <tr><td>protected <a href="AudioFile.html" class="classRef">AudioFile</a></td><td><span class="memberName"><a href="#currentFile" class="fieldRef">currentFile</a></span><div class="memberDescription"> The file currently loaded by this AudioPlayer</div></td></tr>
+
+
+
+     <tr><td>protected long</td><td><span class="memberName"><a href="#currentPosition" class="fieldRef">currentPosition</a></span><div class="memberDescription"> The position (in bytes) of playback, relative to the beginning of the file</div></td></tr>
+
+
+
+     <tr><td>protected boolean</td><td><span class="memberName"><a href="#debug" class="fieldRef">debug</a></span><div class="memberDescription"> Flag for debugging output</div></td></tr>
+
+
+
+     <tr><td>protected static int</td><td><span class="memberName"><a href="#defaultOutputBufferSize" class="fieldRef">defaultOutputBufferSize</a></span><div class="memberDescription"> The default buffer size for audio output</div></td></tr>
+
+
+
+     <tr><td>protected long</td><td><span class="memberName"><a href="#endPosition" class="fieldRef">endPosition</a></span><div class="memberDescription"> The byte position in the current file to stop playing</div></td></tr>
+
+
+
+     <tr><td>protected <a href="GUI.html" class="classRef">GUI</a></td><td><span class="memberName"><a href="#gui" class="fieldRef">gui</a></span><div class="memberDescription"> BeatRoot's graphical user interface</div></td></tr>
+
+
+
+     <tr><td>protected JFileChooser</td><td><span class="memberName"><a href="#jfc" class="fieldRef">jfc</a></span><div class="memberDescription"> The file chooser dialog window for opening and saving files</div></td></tr>
+
+
+
+     <tr><td>protected int[]</td><td><span class="memberName"><a href="#level" class="fieldRef">level</a></span><div class="memberDescription"> The metrical level of each beat (see beats[])</div></td></tr>
+
+
+
+     <tr><td>protected int</td><td><span class="memberName"><a href="#outputBufferSize" class="fieldRef">outputBufferSize</a></span><div class="memberDescription"> The buffer size used by audioOut</div></td></tr>
+
+
+
+     <tr><td>protected boolean</td><td><span class="memberName"><a href="#playAudio" class="fieldRef">playAudio</a></span><div class="memberDescription"> Flag indicating the current mode of playing, whether audio should be played</div></td></tr>
+
+
+
+     <tr><td>protected boolean</td><td><span class="memberName"><a href="#playBeats" class="fieldRef">playBeats</a></span><div class="memberDescription"> Flag indicating the current mode of playing, whether the beats should be played</div></td></tr>
+
+
+
+     <tr><td>protected boolean</td><td><span class="memberName"><a href="#playing" class="fieldRef">playing</a></span><div class="memberDescription"> A flag set by the play thread indicating whether audio playback is active</div></td></tr>
+
+
+
+     <tr><td>protected byte[]</td><td><span class="memberName"><a href="#readBuffer" class="fieldRef">readBuffer</a></span><div class="memberDescription"> Audio input buffer for the current input file</div></td></tr>
+
+
+
+     <tr><td>protected byte[]</td><td><span class="memberName"><a href="#readBuffer2" class="fieldRef">readBuffer2</a></span><div class="memberDescription"> A second audio input buffer used when crossfading between two audio files</div></td></tr>
+
+
+
+     <tr><td>protected static int</td><td><span class="memberName"><a href="#readBufferSize" class="fieldRef">readBufferSize</a></span><div class="memberDescription"> The size of the buffer for reading audio input</div></td></tr>
+
+
+
+     <tr><td>protected <a href="AudioFile.html" class="classRef">AudioFile</a></td><td><span class="memberName"><a href="#requestedFile" class="fieldRef">requestedFile</a></span><div class="memberDescription"> A new file that has been loaded to play next</div></td></tr>
+
+
+
+     <tr><td>protected long</td><td><span class="memberName"><a href="#requestedPosition" class="fieldRef">requestedPosition</a></span><div class="memberDescription"> The requested playback position, in bytes, relative to the beginning of the file</div></td></tr>
+
+
+
+     <tr><td>protected long</td><td><span class="memberName"><a href="#startNanoTime" class="fieldRef">startNanoTime</a></span><div class="memberDescription"> The time that the audio playback last started, in nanoseconds</div></td></tr>
+
+
+
+     <tr><td>protected double</td><td><span class="memberName"><a href="#startTime" class="fieldRef">startTime</a></span><div class="memberDescription"> The time in the playback file where the audio playback last started</div></td></tr>
+
+
+
+     <tr><td>protected boolean</td><td><span class="memberName"><a href="#stopRequested" class="fieldRef">stopRequested</a></span><div class="memberDescription"> A flag indicating to the play thread that playing should stop</div></td></tr>
+
+
+
+     <tr><td>protected static double</td><td><span class="memberName"><a href="#volume" class="fieldRef">volume</a></span><div class="memberDescription"> The relative volume of percussion (for the click track) relative to the input audio</div></td></tr>
+
+   </table>
+
+
+
+
+   <table class="constructor_summary summary">
+     <tr><th colspan="2"><a name="constructor_summary" id="constructor_summary">Constructor Summary</a></th></tr>
+
+     <tr><td> </td><td><span class="memberName"><a href="#AudioPlayer(at.ofai.music.beatroot.AudioFile,javax.swing.JFileChooser)" class="constructorRef">AudioPlayer</a>(<a href="AudioFile.html" class="classRef">AudioFile</a> f, JFileChooser ch)</span><div class="memberDescription"> Constructor</div></td></tr>
+
+   </table>
+
+
+
+
+   <table class="method_summary summary">
+     <tr><th colspan="2"><a name="method_summary" id="method_summary">Method Summary</a></th></tr>
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#addBeat(byte[],int,int,int)" class="methodRef">addBeat</a>(byte[] buffer, int offset, int len, int level)</span><div class="memberDescription"> Adds a percussion sound to an audio sample at a specified time.</div></td></tr>
+
+
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#addBeats(byte[],int)" class="methodRef">addBeats</a>(byte[] buffer, int bytes)</span><div class="memberDescription"> Adds a sequence of percussive sounds marking the beats at various metrical levels to an audio sample.</div></td></tr>
+
+
+
+     <tr><td>  long</td><td><span class="memberName"><a href="#correctedPosition()" class="methodRef">correctedPosition</a>()</span><div class="memberDescription"> Returns current playback position, corrected for audio buffered in the soundcard.</div></td></tr>
+
+
+
+     <tr><td>  long</td><td><span class="memberName"><a href="#getCurrentFileLength()" class="methodRef">getCurrentFileLength</a>()</span><div class="memberDescription"> Returns the length of the current or requested file.</div></td></tr>
+
+
+
+     <tr><td>  double</td><td><span class="memberName"><a href="#getCurrentTime()" class="methodRef">getCurrentTime</a>()</span><div class="memberDescription"> Returns the current playback time in seconds from when play was started.
+  </div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#ifSetPosition(double)" class="methodRef">ifSetPosition</a>(double time)</span><div class="memberDescription"> Conditionally changes the position and possibly the file for input data,
+  if the play thread is idle.  </div></td></tr>
+
+
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#initBeats()" class="methodRef">initBeats</a>()</span><div class="memberDescription"> Initialise the beat list ready for audio playback with beats.
+  </div></td></tr>
+
+
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#initClicks()" class="methodRef">initClicks</a>()</span><div class="memberDescription"> Initialise the percussion sounds for audio playback with beats.
+  </div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#load()" class="methodRef">load</a>()</span><div class="memberDescription"> Open a new audio input file, with the path being chosen by a file chooser dialog.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#load(<unknown>.String)" class="methodRef">load</a>(String fileName)</span><div class="memberDescription"> Open a new audio input file with the given path.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#pause()" class="methodRef">pause</a>()</span><div class="memberDescription"> Notifies play thread to pause playing</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#play()" class="methodRef">play</a>()</span><div class="memberDescription"> Notify play thread to play audio with beats</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#play(boolean)" class="methodRef">play</a>(boolean audioOnly)</span><div class="memberDescription"> Notify play thread to play either audio or beats.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#play(boolean,boolean)" class="methodRef">play</a>(boolean audio, boolean beats)</span><div class="memberDescription"> Notify play thread to play audio, beats or both.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#run()" class="methodRef">run</a>()</span><div class="memberDescription"> Implements the Runnable interface for the audio playback thread.
+  </div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#save()" class="methodRef">save</a>()</span><div class="memberDescription"> Saves audio with beats as a WAV file, with name determined by a file chooser dialog.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#setCurrentFile(at.ofai.music.beatroot.AudioFile)" class="methodRef">setCurrentFile</a>(<a href="AudioFile.html" class="classRef">AudioFile</a> newFile)</span><div class="memberDescription"> Change the input file for audio playback (in a thread-safe way).</div></td></tr>
+
+
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#setPosition(long)" class="methodRef">setPosition</a>(long positionRequested)</span><div class="memberDescription"> Changes the position and possibly the file for input data, and updates the GUI accordingly.</div></td></tr>
+
+
+
+     <tr><td>protected  void</td><td><span class="memberName"><a href="#setPosition(long,boolean)" class="methodRef">setPosition</a>(long positionRequested, boolean update)</span><div class="memberDescription"> Changes the position and possibly the file for input data.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#skip(double)" class="methodRef">skip</a>(double time)</span><div class="memberDescription"> Changes the playback position relative to the current playback position.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#skip(long)" class="methodRef">skip</a>(long bytes)</span><div class="memberDescription"> Changes the playback position relative to the current playback position.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#stop(boolean)" class="methodRef">stop</a>(boolean resetPosition)</span><div class="memberDescription"> Notifies play thread to stop playing.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#stop()" class="methodRef">stop</a>()</span><div class="memberDescription"> Notifies play thread to stop playing or reset position if not playing.</div></td></tr>
+
+
+
+     <tr><td>  void</td><td><span class="memberName"><a href="#togglePlay()" class="methodRef">togglePlay</a>()</span><div class="memberDescription"> Notifies the play thread to pause if playing or play if paused/stopped.</div></td></tr>
+
+   </table>
+
+
+
+<!--
+   <p class="inherited">
+    <span class="header">Methods inherited from class java.util.<a
+   href="AbstractCollection.html">AbstractCollection</a></span>
+    <a href="#addAll">addAll</a>
+    <a href="#contains">contains</a>
+   </p>
+   <p class="inherited">
+    <span class="header">Methods inherited from class java.lang.<a
+   href="Object.html">Object</a></span>
+    <a href="#addAll">clone</a>
+    <a href="#contains">finalize</a>
+   </p>
+   <p class="inherited">
+    <span class="header">Methods inherited from interface java.util.<a
+   href="List.html">List</a></span>
+    <a href="#addAll">addAll</a>
+    <a href="#contains">contains</a>
+   </p>
+-->
+
+
+
+   <h2><a name="field_detail" id="field_detail">Field Detail</a></h2>
+
+   <h3><a name="audioOut" id="audioOut">audioOut</a></h3>
+   <div class="memberName">protected SourceDataLine audioOut</div>
+   <div class="memberDescription"> The object to which audio output is written</div>
+
+
+   <h3><a name="beatIndex" id="beatIndex">beatIndex</a></h3>
+   <div class="memberName">protected int beatIndex</div>
+   <div class="memberDescription"> The index in beats[] of the next beat (relative to the current playback position</div>
+
+
+   <h3><a name="beats" id="beats">beats</a></h3>
+   <div class="memberName">protected long[] beats</div>
+   <div class="memberDescription"> The positions in samples of beats for playback of audio with click marking beat times</div>
+
+
+   <h3><a name="click" id="click">click</a></h3>
+   <div class="memberName">protected int[][] click</div>
+   <div class="memberDescription"> An array of percussion sounds</div>
+
+
+   <h3><a name="currentFile" id="currentFile">currentFile</a></h3>
+   <div class="memberName">protected <a href="AudioFile.html" class="classRef">AudioFile</a> currentFile</div>
+   <div class="memberDescription"> The file currently loaded by this AudioPlayer</div>
+
+
+   <h3><a name="currentPosition" id="currentPosition">currentPosition</a></h3>
+   <div class="memberName">protected long currentPosition</div>
+   <div class="memberDescription"> The position (in bytes) of playback, relative to the beginning of the file</div>
+
+
+   <h3><a name="debug" id="debug">debug</a></h3>
+   <div class="memberName">protected boolean debug</div>
+   <div class="memberDescription"> Flag for debugging output</div>
+
+
+   <h3><a name="defaultOutputBufferSize" id="defaultOutputBufferSize">defaultOutputBufferSize</a></h3>
+   <div class="memberName">protected static final int defaultOutputBufferSize</div>
+   <div class="memberDescription"> The default buffer size for audio output</div>
+
+
+   <h3><a name="endPosition" id="endPosition">endPosition</a></h3>
+   <div class="memberName">protected long endPosition</div>
+   <div class="memberDescription"> The byte position in the current file to stop playing</div>
+
+
+   <h3><a name="gui" id="gui">gui</a></h3>
+   <div class="memberName">protected <a href="GUI.html" class="classRef">GUI</a> gui</div>
+   <div class="memberDescription"> BeatRoot's graphical user interface</div>
+
+
+   <h3><a name="jfc" id="jfc">jfc</a></h3>
+   <div class="memberName">protected JFileChooser jfc</div>
+   <div class="memberDescription"> The file chooser dialog window for opening and saving files</div>
+
+
+   <h3><a name="level" id="level">level</a></h3>
+   <div class="memberName">protected int[] level</div>
+   <div class="memberDescription"> The metrical level of each beat (see beats[])</div>
+
+
+   <h3><a name="outputBufferSize" id="outputBufferSize">outputBufferSize</a></h3>
+   <div class="memberName">protected int outputBufferSize</div>
+   <div class="memberDescription"> The buffer size used by audioOut</div>
+
+
+   <h3><a name="playAudio" id="playAudio">playAudio</a></h3>
+   <div class="memberName">protected boolean playAudio</div>
+   <div class="memberDescription"> Flag indicating the current mode of playing, whether audio should be played</div>
+
+
+   <h3><a name="playBeats" id="playBeats">playBeats</a></h3>
+   <div class="memberName">protected boolean playBeats</div>
+   <div class="memberDescription"> Flag indicating the current mode of playing, whether the beats should be played</div>
+
+
+   <h3><a name="playing" id="playing">playing</a></h3>
+   <div class="memberName">protected boolean playing</div>
+   <div class="memberDescription"> A flag set by the play thread indicating whether audio playback is active</div>
+
+
+   <h3><a name="readBuffer" id="readBuffer">readBuffer</a></h3>
+   <div class="memberName">protected byte[] readBuffer</div>
+   <div class="memberDescription"> Audio input buffer for the current input file</div>
+
+
+   <h3><a name="readBuffer2" id="readBuffer2">readBuffer2</a></h3>
+   <div class="memberName">protected byte[] readBuffer2</div>
+   <div class="memberDescription"> A second audio input buffer used when crossfading between two audio files</div>
+
+
+   <h3><a name="readBufferSize" id="readBufferSize">readBufferSize</a></h3>
+   <div class="memberName">protected static final int readBufferSize</div>
+   <div class="memberDescription"> The size of the buffer for reading audio input</div>
+
+
+   <h3><a name="requestedFile" id="requestedFile">requestedFile</a></h3>
+   <div class="memberName">protected <a href="AudioFile.html" class="classRef">AudioFile</a> requestedFile</div>
+   <div class="memberDescription"> A new file that has been loaded to play next</div>
+
+
+   <h3><a name="requestedPosition" id="requestedPosition">requestedPosition</a></h3>
+   <div class="memberName">protected long requestedPosition</div>
+   <div class="memberDescription"> The requested playback position, in bytes, relative to the beginning of the file</div>
+
+
+   <h3><a name="startNanoTime" id="startNanoTime">startNanoTime</a></h3>
+   <div class="memberName">protected long startNanoTime</div>
+   <div class="memberDescription"> The time that the audio playback last started, in nanoseconds</div>
+
+
+   <h3><a name="startTime" id="startTime">startTime</a></h3>
+   <div class="memberName">protected double startTime</div>
+   <div class="memberDescription"> The time in the playback file where the audio playback last started</div>
+
+
+   <h3><a name="stopRequested" id="stopRequested">stopRequested</a></h3>
+   <div class="memberName">protected boolean stopRequested</div>
+   <div class="memberDescription"> A flag indicating to the play thread that playing should stop</div>
+
+
+   <h3><a name="volume" id="volume">volume</a></h3>
+   <div class="memberName">protected static double volume</div>
+   <div class="memberDescription"> The relative volume of percussion (for the click track) relative to the input audio</div>
+
+
+
+
+   <h2><a name="constructor_detail" id="constructor_detail">Constructor Detail</a></h2>
+
+   <h3><a name="AudioPlayer(at.ofai.music.beatroot.AudioFile,javax.swing.JFileChooser)" id="AudioPlayer(at.ofai.music.beatroot.AudioFile,javax.swing.JFileChooser)">AudioPlayer</a></h3>
+   <div class="memberName">public  AudioPlayer(<a href="AudioFile.html" class="classRef">AudioFile</a> f, JFileChooser ch)</div>
+   <div class="memberDescription"> Constructor<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">f The input audio file</span> <span class="tagContents">ch The FileChooser object for opening and saving files</span> </p>
+</div>
+
+
+
+
+   <h2><a name="method_detail" id="method_detail">Method Detail</a></h2>
+
+   <h3><a name="addBeat(byte[],int,int,int)" id="addBeat(byte[],int,int,int)">addBeat</a></h3>
+   <div class="memberName">protected  void addBeat(byte[] buffer, int offset, int len, int level)</div>
+   <div class="memberDescription"> Adds a percussion sound to an audio sample at a specified time.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">buffer The audio sample without the beats being marked</span> <span class="tagContents">offset Offset of the percussion sound relative to the audio sample</span> <span class="tagContents">len    Length of the sound to add (in bytes)</span> <span class="tagContents">level  Metrical level of the percussion sound (determines instrument)</span> </p>
+</div>
+
+
+   <h3><a name="addBeats(byte[],int)" id="addBeats(byte[],int)">addBeats</a></h3>
+   <div class="memberName">protected  void addBeats(byte[] buffer, int bytes)</div>
+   <div class="memberDescription"> Adds a sequence of percussive sounds marking the beats at various metrical levels to an audio sample.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">buffer The audio sample without beats</span> <span class="tagContents">bytes  The length of the audio sample in bytes</span> </p>
+</div>
+
+
+   <h3><a name="correctedPosition()" id="correctedPosition()">correctedPosition</a></h3>
+   <div class="memberName">public  long correctedPosition()</div>
+   <div class="memberDescription"> Returns current playback position, corrected for audio buffered in the soundcard.<p class="tag tag_return"><span class="tagName">Returns:</span> <span class="tagContents">Current playback position in bytes relative to the beginning of the file.</span> </p>
+</div>
+
+
+   <h3><a name="getCurrentFileLength()" id="getCurrentFileLength()">getCurrentFileLength</a></h3>
+   <div class="memberName">public  long getCurrentFileLength()</div>
+   <div class="memberDescription"> Returns the length of the current or requested file.<p class="tag tag_return"><span class="tagName">Returns:</span> <span class="tagContents">Length in bytes of the current or requested audio input file.</span> </p>
+</div>
+
+
+   <h3><a name="getCurrentTime()" id="getCurrentTime()">getCurrentTime</a></h3>
+   <div class="memberName">public  double getCurrentTime()</div>
+   <div class="memberDescription"> Returns the current playback time in seconds from when play was started.
+  Note that DataLine.getLongFramePosition() is not reliable - it counts in units
+  of output buffers or simple fractions thereof - i.e. what has been sent to the
+  soundcard rather than what has been rendered by the soundcard.<p class="tag tag_return"><span class="tagName">Returns:</span> <span class="tagContents">Playback time in seconds</span> </p>
+</div>
+
+
+   <h3><a name="ifSetPosition(double)" id="ifSetPosition(double)">ifSetPosition</a></h3>
+   <div class="memberName">public  void ifSetPosition(double time)</div>
+   <div class="memberDescription"> Conditionally changes the position and possibly the file for input data,
+  if the play thread is idle.  The GUI is not updated.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">time New play position (in seconds)</span> </p>
+</div>
+
+
+   <h3><a name="initBeats()" id="initBeats()">initBeats</a></h3>
+   <div class="memberName">protected  void initBeats()</div>
+   <div class="memberDescription"> Initialise the beat list ready for audio playback with beats.
+  Copies beats into an array for quick and simple retrieval during playback.
+  Might not be the best solution; e.g. direct use of the beat list would be
+  possible if checks were made for concurrent modification</div>
+
+
+   <h3><a name="initClicks()" id="initClicks()">initClicks</a></h3>
+   <div class="memberName">protected  void initClicks()</div>
+   <div class="memberDescription"> Initialise the percussion sounds for audio playback with beats.
+  Reads each of the sounds into an array for quick and simple playback.</div>
+
+
+   <h3><a name="load()" id="load()">load</a></h3>
+   <div class="memberName">public  void load()</div>
+   <div class="memberDescription"> Open a new audio input file, with the path being chosen by a file chooser dialog.</div>
+
+
+   <h3><a name="load(<unknown>.String)" id="load(<unknown>.String)">load</a></h3>
+   <div class="memberName">public  void load(String fileName)</div>
+   <div class="memberDescription"> Open a new audio input file with the given path.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">fileName The relative or absolate path name of the new audio input file.</span> </p>
+</div>
+
+
+   <h3><a name="pause()" id="pause()">pause</a></h3>
+   <div class="memberName">public  void pause()</div>
+   <div class="memberDescription"> Notifies play thread to pause playing</div>
+
+
+   <h3><a name="play()" id="play()">play</a></h3>
+   <div class="memberName">public  void play()</div>
+   <div class="memberDescription"> Notify play thread to play audio with beats</div>
+
+
+   <h3><a name="play(boolean)" id="play(boolean)">play</a></h3>
+   <div class="memberName">public  void play(boolean audioOnly)</div>
+   <div class="memberDescription"> Notify play thread to play either audio or beats.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">audioOnly Flag indicating whether to play audio (true) or play beats (false)</span> </p>
+</div>
+
+
+   <h3><a name="play(boolean,boolean)" id="play(boolean,boolean)">play</a></h3>
+   <div class="memberName">public  void play(boolean audio, boolean beats)</div>
+   <div class="memberDescription"> Notify play thread to play audio, beats or both.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">audio Flag indicating whether audio should be played</span> <span class="tagContents">beats Flag indicating whether beats should be played</span> </p>
+</div>
+
+
+   <h3><a name="run()" id="run()">run</a></h3>
+   <div class="memberName">public  void run()</div>
+   <div class="memberDescription"> Implements the Runnable interface for the audio playback thread.
+  This method has two loops: an outer "request" loop and an inner "play" loop.
+  The outer loop waits for a signal (notify()) from the play() method, and then
+  initialises audio output and click track data, and enters the inner play loop.
+  The inner loop reads audio from the input file and writes to the audio device,
+  exiting only at the end of file or an external request to stop or pause playback,
+  or to switch playback to a new file.</div>
+
+
+   <h3><a name="save()" id="save()">save</a></h3>
+   <div class="memberName">public  void save()</div>
+   <div class="memberDescription"> Saves audio with beats as a WAV file, with name determined by a file chooser dialog.</div>
+
+
+   <h3><a name="setCurrentFile(at.ofai.music.beatroot.AudioFile)" id="setCurrentFile(at.ofai.music.beatroot.AudioFile)">setCurrentFile</a></h3>
+   <div class="memberName">public  void setCurrentFile(<a href="AudioFile.html" class="classRef">AudioFile</a> newFile)</div>
+   <div class="memberDescription"> Change the input file for audio playback (in a thread-safe way).<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">newFile The new input file.</span> </p>
+</div>
+
+
+   <h3><a name="setPosition(long)" id="setPosition(long)">setPosition</a></h3>
+   <div class="memberName">protected  void setPosition(long positionRequested)</div>
+   <div class="memberDescription"> Changes the position and possibly the file for input data, and updates the GUI accordingly.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">positionRequested The new file position (in bytes) for audio input</span> </p>
+</div>
+
+
+   <h3><a name="setPosition(long,boolean)" id="setPosition(long,boolean)">setPosition</a></h3>
+   <div class="memberName">protected  void setPosition(long positionRequested, boolean update)</div>
+   <div class="memberDescription"> Changes the position and possibly the file for input data.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">positionRequested The new file position (in bytes) for audio input</span> <span class="tagContents">update Flag to indicate whether the GUI should be updated or not</span> </p>
+</div>
+
+
+   <h3><a name="skip(double)" id="skip(double)">skip</a></h3>
+   <div class="memberName">public  void skip(double time)</div>
+   <div class="memberDescription"> Changes the playback position relative to the current playback position.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">time Offset of new play position (in seconds) relative to present play position.</span> </p>
+</div>
+
+
+   <h3><a name="skip(long)" id="skip(long)">skip</a></h3>
+   <div class="memberName">public  void skip(long bytes)</div>
+   <div class="memberDescription"> Changes the playback position relative to the current playback position.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">bytes Offset of new play position (in bytes) relative to present play position.</span> </p>
+</div>
+
+
+   <h3><a name="stop(boolean)" id="stop(boolean)">stop</a></h3>
+   <div class="memberName">public  void stop(boolean resetPosition)</div>
+   <div class="memberDescription"> Notifies play thread to stop playing.<p class="tag tag_param"><span class="tagName">Parameters:</span> <span class="tagContents">resetPosition Flag indicating whether to reset the playback position to the beginning of the file</span> </p>
+</div>
+
+
+   <h3><a name="stop()" id="stop()">stop</a></h3>
+   <div class="memberName">public  void stop()</div>
+   <div class="memberDescription"> Notifies play thread to stop playing or reset position if not playing.</div>
+
+
+   <h3><a name="togglePlay()" id="togglePlay()">togglePlay</a></h3>
+   <div class="memberName">public  void togglePlay()</div>
+   <div class="memberDescription"> Notifies the play thread to pause if playing or play if paused/stopped.</div>
+
+   
+   <div class="navbar">
+    <p class="nav navtop">
+      <span class="over"><a href="../../../../overview-summary.html">Overview</a></span>
+      <span class="package"><a href="package-summary.html">Package</a></span>
+      <span class="class selected">Class</span>
+      <span class="use"><a href="class-use/AudioPlayer.html">Use</a></span>
+      <span class="tree"><a href="package-tree.html">Tree</a></span>
+      <span class="deprecated"><a href="../../../../deprecated-list.html">Deprecated</a></span>
+      <span class="index"><a href="../../../../index-all.html">Index</a></span>
+      <span class="help"><a href="../../../../help-doc.html">Help</a></span>
+    </p>
+    <p class="nav navmid">
+      <span class="prevnext">
+       <span class="prev">Prev Class</span>
+       <span class="next">Next Class</span>
+      </span>
+      <span class="framesel">
+       <span class="frames"><a href="../../../../index.html" target="_top">Frames</a></span>
+       <span class="noframes"><a href="AudioPlayer.html" target="_top">NoFrames</a></span>
+      </span>
+      <span class="allclasses"><a href="../../../../allclasses-noframe.html">All Classes</a></span>
+   </p>
+   <p class="nav navbot">
+      <span class="summary">Summary:
+       <span class="nested">Nested</span>
+       <span class="field"><a href="#field_summary">Field</a></span>
+       <span class="constr"><a href="#constructor_summary">Constr</a></span>
+       <span class="method"><a href="#method_summary">Method</a></span>
+      </span>
+      <span class="detail">Detail:
+       <span class="field"><a href="#field_detail">Field</a></span>
+       <span class="constr"><a href="#constructor_detail">Constr</a></span>
+       <span class="method"><a href="#method_detail">Method</a></span>
+      </span>
+   </p>
+    <div class="navtitle">
+     
+    </div>
+    <p class="clear"><!--empty--></p>
+   </div>
+   <div class="bottom"></div>
+   </body>
+</html>
