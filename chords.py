@@ -16,7 +16,7 @@ def gen_bass_seq(basschroma_file):
     :param basschroma_file:
     :return:
     """
-    bass_chroma = np.loadtxt(basschroma_file, delimiter=',')
+    bass_chroma = np.loadtxt(basschroma_file, delimiter=',', skiprows=1)
     timestamp = bass_chroma[:, 0]
     notes = bass_chroma[:, 1:]
     bassline = notes.max(axis=1)
