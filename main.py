@@ -15,17 +15,15 @@ from tonality import detect_tonality
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-b',
-                        '--basschroma',
-                        dest='basschroma_path')
+    parser.add_argument('-m',
+                        '--music',
+                        dest='music_path',
+                        default=None)
 
     parser.add_argument('-c',
-                        '--chroma',
-                        dest='chroma_path')
-
-    parser.add_argument('-o',
-                        '--output',
-                        dest='output_path')
+                        '--clip',
+                        dest='clip_path',
+                        default=None)
 
     return parser.parse_args()
 
