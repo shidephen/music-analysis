@@ -6,10 +6,8 @@ Created on Sun Sep 18 17:01:37 2016
 """
 
 import argparse
-import tonality
-import pandas as pd
-from extract_chroma import gen_chroma
-from tonality import detect_tonality
+from processing import process_clip, process_music
+from config import *
 
 
 def parse_args():
@@ -28,10 +26,18 @@ def parse_args():
     return parser.parse_args()
 
 
+def warmup_check():
+    pass
+
+
 def main(args):
-    chroma = pd.read_csv(args.chroma_path)
-    t, tn = tonality.detect_tonality(chroma)
-    print(tn)
+    if args.music_path is not None:
+        print('Processing music: %s' % args.music_path)
+        process_music(args.music_path)
+
+    if args.clip_path is not None:
+        print('Processing clips: %s' % args.clip_path)
+        process_clip(args.clip_path)
 
 if __name__ == '__main__':
     args = parse_args()
