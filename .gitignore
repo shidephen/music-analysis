@@ -105,3 +105,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+# PyCharm
+.idea/
