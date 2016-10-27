@@ -15,7 +15,11 @@ QUARTER_SIZE = 0.25
 
 
 def detect_tempo(beatline):
-
+    """
+    计算歌曲的bpm数
+    :param beatline: 包含beat信息的numpy array
+    :return: bpm
+    """
     p1_beats = beatline[1:]
     n1_beats = beatline[0: -1]
     offset = p1_beats - n1_beats
