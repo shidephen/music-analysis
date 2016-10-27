@@ -6,7 +6,6 @@ Created on Sun Sep 18 17:01:37 2016
 """
 
 import numpy as np
-import pandas as pd
 from scipy import linalg
 from tone import tone_map, gen_scales_seq
 
@@ -76,15 +75,19 @@ def _move_major_key(root, chroma_sum, tone_idx):
     return root
 
 
-def detect_tonality(chroma_file, norm_ord=None):
-    chroma = pd.read_csv(chroma_file)
-    
+def detect_tonality(chroma, norm_ord=None):
+    """
+    根据chroma信息检测歌曲调性
+    :param chroma: chroma 数组
+    :param norm_ord: 标准化选项，同norm函数
+    :return: (调性， 调字符表示)
+    """
+    chroma = chroma[:, 1:]
     if norm_ord is None:        
         chroma_sum = np.mean(chroma)
         chroma_sum = chroma_sum[1:]
         chroma_sum = np.array(chroma_sum)
     else:
-        chroma = np.array(chroma)
         chroma_sum = np.empty([12])
         for c in chroma:
             semi = c[1:]
