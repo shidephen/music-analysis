@@ -107,4 +107,4 @@ local.properties
 .recommenders
 
 # PyCharm
-.idea/
+.idea/*
