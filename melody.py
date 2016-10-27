@@ -8,7 +8,7 @@ Created on Wed Sep 28 15:15:48 2016
 import numpy as np
 import copy
 from scipy import linalg
-from music21 import note, stream
+from music21 import note, stream, midi
 from tone import gen_scales_seq, music21_tone_map
 
 
@@ -67,14 +67,16 @@ def split_melody(notes, length_in_quarter):
     # remain.plot()
     return sliced
 
+
 def score_melody_clip(melody_seq, chord_seq, bar_size=4):
     """
     为旋律与和弦匹配评分
     按照完全和弦内音时值总和除以拍数
     旋律和和弦序列的小节数必须匹配
-    :param melody_seq:
-    :param chord_seq:
-    :return:
+    :param melody_seq: 旋律音符序列
+    :param chord_seq: 和弦序列
+    :param bar_size: 一小节长度
+    :return: 匹配度
     """
     i_quarter = 0
     score = 0
@@ -88,10 +90,10 @@ def score_melody_clip(melody_seq, chord_seq, bar_size=4):
             i_quarter += n.quarterLength
             continue
 
-        i_chord = min(int(i_quarter) / bar_size, chord_len - 1) # assume 4 beats in a section
+        i_chord = min(int(i_quarter) / bar_size, chord_len - 1)  # assume 4 beats in a section
         i_n = music21_tone_map.tolist().index(n.name)
         root = chord_seq[i_chord]
-        scales = gen_scales_seq(root, 'major')[[0, 2, 4, 6]] # the 1st 3rd 5th 7th level is accepted
+        scales = gen_scales_seq(root, 'major')[[0, 2, 4, 6]]  # the 1st 3rd 5th 7th level is accepted
         if i_n in scales:
             score += n.quarterLength
         i_quarter += n.quarterLength
@@ -99,13 +101,14 @@ def score_melody_clip(melody_seq, chord_seq, bar_size=4):
     return score / chord_len / bar_size
 
 
-def match_melody_clips(melody_seq, chord_seq, chord_beats, climax_info):
+def match_melody_clips(melody_seq, chord_seq, chord_beats, climax_info, count):
     """
     按照评分规则选择最优的旋律片段凑成高潮部分
     :param melody_seq: 旋律片段
     :param chord_seq: 和弦序列
     :param chord_beats: 和弦拍号
     :param climax_info: 高潮信息
+    :param count: 生成的旋律排序元素个数
     :return: (总分, 生成的最优旋律)
     """
     grain = 4 # 4 bars
@@ -118,36 +121,45 @@ def match_melody_clips(melody_seq, chord_seq, chord_beats, climax_info):
     chord_seq_len = len(chord_seq)
     total_score = 0
 
+    # search for the 1st chord at the begining of climax
     i_chord = 0
     for i in range(len(chord_beats)):
         if abs(chord_beats[i] - climax_start) <= 1:
             i_chord = i
 
+    bin_size = climax_len / grain
+
+    C = np.zeros((len(clips), bin_size))  # clips id matrix
+    S = np.zeros(C.shape)  # scores matrix corresponding to C
+
+    clip_weights = np.zeros(len(clips))
+
     for i in range(0, climax_len, grain):
         # 1. find next 4 chord roots
         chords = chord_seq[i_chord : min(i_chord + grain, chord_seq_len - 1)]
 
-        # 2. search clips for these chords
-        max_match_score = 0
-        best_clip = 0
+        # 2. score clips for these chords
 
-        """
+        """ !deprecated
         In order to select unused clip
         initial a clip weights with 1.0
         if a clip is chosen, weight corresponding to the clip will decrease by negtive exp
         """
-        clip_weights= [0.0 for x in range(len(clips))]
 
         for j in range(len(clips)):
-            score = np.exp(-clip_weights[j]) * score_melody_clip(clips[j], chords)
-            if score > max_match_score:
-                max_match_score = score
-                best_clip = j
-                clip_weights[j] += 2.0 # used rate decrease by step 0.5
-
-        total_score += max_match_score
-        prefer_clips.append(copy.deepcopy(clips[best_clip]))
+            C[j, i/grain] = clips[j].clip_id # fill in clip id
+            # default: notes in the 1st part of midi file
+            clip_notes = midi.translate.midiFilePathToStream(clips[j].path)[0]
+            S[j, i/grain] = np.exp(-clip_weights[j]) * score_melody_clip(clip_notes, chords)
 
         i_chord += grain
 
-    return total_score, prefer_clips
+    sorted_idx = np.argsort(-S, 0)
+    C_sorted = np.zeros((count, bin_size))
+    S_sorted = np.zeros(C_sorted.shape)
+
+    for i in range(bin_size):
+        C_sorted[:, i] = C[:, i][sorted_idx[:count, i]]
+        S_sorted[:, i] = S[:, i][sorted_idx[:count, i]]
+
+    return C_sorted, S_sorted
