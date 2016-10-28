@@ -101,20 +101,20 @@ def score_melody_clip(melody_seq, chord_seq, bar_size=4):
     return score / chord_len / bar_size
 
 
-def match_melody_clips(melody_seq, chord_seq, chord_beats, climax_info, count):
+def match_melody_clips(clips, chords, climax_info, count):
     """
     按照评分规则选择最优的旋律片段凑成高潮部分
-    :param melody_seq: 旋律片段
-    :param chord_seq: 和弦序列
-    :param chord_beats: 和弦拍号
+    :param chords: 和弦信息
+    :param clips: 旋律片段
     :param climax_info: 高潮信息
     :param count: 生成的旋律排序元素个数
     :return: (总分, 生成的最优旋律)
     """
     grain = 4 # 4 bars
-    clips = split_melody(melody_seq, grain*4)
 
-    prefer_clips = stream.Part()
+    chord_seq = chords[:, 1]
+    chord_beats = chords[:, 0]
+
     climax_start = climax_info[0]
     # climax_end = climax_info[-1]
     climax_len = len(climax_info)
@@ -155,11 +155,12 @@ def match_melody_clips(melody_seq, chord_seq, chord_beats, climax_info, count):
         i_chord += grain
 
     sorted_idx = np.argsort(-S, 0)
-    C_sorted = np.zeros((count, bin_size))
+    row_size = min(count, len(clips))
+    C_sorted = np.zeros((row_size, bin_size))
     S_sorted = np.zeros(C_sorted.shape)
 
     for i in range(bin_size):
-        C_sorted[:, i] = C[:, i][sorted_idx[:count, i]]
-        S_sorted[:, i] = S[:, i][sorted_idx[:count, i]]
+        C_sorted[:, i] = C[:, i][sorted_idx[:row_size, i]]
+        S_sorted[:, i] = S[:, i][sorted_idx[:row_size, i]]
 
     return C_sorted, S_sorted
