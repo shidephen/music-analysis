@@ -30,7 +30,7 @@ def extract_chord_seq(basschroma, beatline, key, bar_size=4):
     :param basschroma: basschroma (带时间)
     :param beatline: 拍号时基
     :param bar_size: 小节大小(拍)
-    :return: (拍号序列, 根音序列)
+    :return: [拍号序列, 根音序列]
     """
 
     interval = BLOCK_SIZE / SAMPLING_RATE
@@ -64,4 +64,4 @@ def extract_chord_seq(basschroma, beatline, key, bar_size=4):
 
         b += bar_size
 
-    return beats_seq, chords_seq
+    return np.array([beats_seq, chords_seq]).T
