@@ -63,7 +63,7 @@ def process_music(music_path, info_path, style):
     beatline = np.loadtxt(beat_file)
     # till now only use climax infomation
     info_path_new = os.path.join(MUSIC_INFO_PATH, music_name+INFO_SUFFIX)
-    shutil.move(info_path, info_path_new)
+    shutil.copy(info_path, info_path_new)
     climax = get_climax(info_path_new)
 
     assert(len(chroma) > 0)
@@ -81,6 +81,8 @@ def process_music(music_path, info_path, style):
 
     # Estimate chords
     chords = extract_chord_seq(basschroma, beatline, key)
+    chord_path = os.path.join(CHORD_PATH, music_name+CHORD_SUFFIX)
+    np.savetxt(chord_path, chords)
 
     # connect to database
     session = None
@@ -93,6 +95,7 @@ def process_music(music_path, info_path, style):
     assert(session is not None)
     # fetch all clips in the same key
     clips = session.query(db.ClipInfo).filter(db.ClipInfo.key == key).all()
+    assert(len(clips) > 0)
 
     # compute clip scores
     C, S = match_melody_clips(clips, chords, climax, 10)
@@ -106,6 +109,7 @@ def process_music(music_path, info_path, style):
     np.savetxt(Cmatrix_path, C)
     np.savetxt(Smatrix_path, S)
 
+    # insert music and match info to db
     info = db.MusicInfo()
     info.name = music_name
     info.time = duration
@@ -113,6 +117,35 @@ def process_music(music_path, info_path, style):
     info.bpm = bpm
     info.key = key
     info.music_path = music_path
+    info.beat_path = beat_file
+    info.info_path = info_path_new
+    info.chord_path = chord_path
+    info.type = 0
+    info.avaliable = 1
+
+    is_written_to_db = False
+    session.add(info)
+    try:
+        session.commit()
+        is_written_to_db = True
+    except Exception as ex:
+        print('\nFailed to insert music to db\n')
+        print(ex.message)
+        session.rollback()
+
+    if is_written_to_db:
+        cm = db.ClipMatchMat()
+        cm.music_id = info.music_id
+        cm.clip_matrix_path = Cmatrix_path
+        cm.score_matrix_path = Smatrix_path
+        session.add(cm)
+        try:
+            session.commit()
+            is_written_to_db = True
+        except Exception as ex:
+            print('\nFailed to insert clip matrix to db\n')
+            print(ex.message)
+            session.rollback()
 
     # delete temp chroma files
     if os.path.exists(chroma_file):
@@ -126,7 +159,7 @@ def process_music(music_path, info_path, style):
     if not music_path.endswith('.wav'):
         os.remove(music_wav)
 
-    return True
+    return is_written_to_db
 
 
 def process_clip(clip_path):
