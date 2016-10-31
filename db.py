@@ -52,10 +52,10 @@ class ClipMatchMat(Base):
     """
     __tablename__ = 'match_matrices'
 
-    matrix_id   = Column('id', Integer, primary_key=True, autoincrement=True)
-    music_id    = Column(Integer, ForeignKey('info.id'))
-    matrix_path = Column(String(255))
-    score       = Column(Float)
+    matrix_id           = Column('id', Integer, primary_key=True, autoincrement=True)
+    music_id            = Column(Integer, ForeignKey('info.id'))
+    clip_matrix_path    = Column(String(255))
+    score_matrix_path   = Column(Float)
 
 
 __engine = create_engine(CONNECTION_STRING)
