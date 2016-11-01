@@ -8,6 +8,7 @@ from pydub import AudioSegment
 import os
 import shutil
 import numpy as np
+from music21 import midi,tempo
 
 from config import *
 from extract_chroma import gen_chroma
@@ -15,25 +16,20 @@ from tonality import detect_tonality
 from chords import extract_chord_seq
 from tempo import get_climax, detect_tempo
 from beat import gen_beat_file
-from melody import match_melody_clips
+from melody import match_melody_clips, split_melody
+from tone import *
+from format import convert2wav, construct_midi
 import db
 
-def convert2wav(filepath):
-    if not os.path.exists(filepath):
-        return None, 0
-
-    if filepath.endswith('.wav'):
-        clip = AudioSegment.from_file(filepath)
-        return filepath, clip.duration_seconds
-
-    pos = filepath.rfind('.')
-    outputfile = filepath[0: pos] + '.wav'
-    clip = AudioSegment.from_file(filepath)
-    clip.export(outputfile, format='wav')
-    os.remove(filepath)
-    return outputfile, clip.duration_seconds
 
 def process_music(music_path, info_path, style):
+    """
+    处理伴奏文件
+    :param music_path: 伴奏音频文件路径
+    :param info_path: 伴奏的结构信息
+    :param style: 伴奏的风格信息
+    :return: 是否入库成功
+    """
     music_name = os.path.split(music_path)[-1]
     music_name = music_name[: music_name.rfind('.')]
 
@@ -109,6 +105,10 @@ def process_music(music_path, info_path, style):
     np.savetxt(Cmatrix_path, C)
     np.savetxt(Smatrix_path, S)
 
+    # copy music to music directory
+    music_storage_path = os.path.join(MUSIC_PATH, music_name+'.wav')
+    shutil.copy(music_wav, music_storage_path)
+
     # insert music and match info to db
     info = db.MusicInfo()
     info.name = music_name
@@ -163,4 +163,75 @@ def process_music(music_path, info_path, style):
 
 
 def process_clip(clip_path):
-    pass
+    """
+    将旋律MIDI切割并存入数据库
+    :param clip_path:
+    :return:
+    """
+    notes = midi.translate.midiFilePathToStream(clip_path)
+    if len(notes) > 0:
+        notes = notes[0]
+
+    # get detect key info
+    key = notes.analyze('key').name.split(' ')
+    key_name = key[0]
+    tonality = key[1]
+    key_num = np.where(music21_tone_map == key_name)[0][0]
+
+    if tonality.find('minor') >= 0:
+        key_num = (key_num + 3) % 12
+
+    # get bpm
+    m = None
+    for e in notes:
+        if e.isClassOrSubclass((tempo.MetronomeMark,)):
+            m = e
+
+    bpm = round(m.number)
+
+    """
+    split melody.
+    default granularity is 4 bars.
+    """
+    gran = 4 * 4
+    clips = split_melody(notes, gran)
+
+    # connect to database
+    session = None
+    try:
+        session = db.Session()
+    except Exception as ex:
+        print('\nError connecting to database %s, %s\n'
+              % (CONNECTION_STRING, ex.message))
+        return False
+
+    # insert info to db and save splitted clips to midi files.
+    melody_name = os.path.split(clip_path)[-1]
+    melody_name = melody_name[: melody_name.rfind('.')]
+
+    for i in range(len(clips)):
+        midi_filename = '%s_%d.mid' % (melody_name, i)
+        midi_path = os.path.join(CLIP_PATH, midi_filename)
+
+        converted_midi = construct_midi(clips[i], bpm)
+        mf = midi.translate.streamToMidiFile(converted_midi)
+        mf.open(midi_path, 'wb')
+        mf.write()
+        mf.close()
+
+        clip_info = db.ClipInfo()
+        clip_info.key = key_num
+        clip_info.bpm = bpm
+        clip_info.path = midi_path
+
+        session.add(clip_info)
+
+    try:
+        session.commit()
+    except Exception as ex:
+        print('\nFailed to insert music to db\n')
+        print(ex.message)
+        session.rollback()
+        return False
+
+    return True
