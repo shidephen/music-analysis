@@ -58,5 +58,5 @@ class ClipMatchMat(Base):
     score_matrix_path   = Column(Float)
 
 
-__engine = create_engine(CONNECTION_STRING)
-Session = sessionmaker(bind=__engine)
+engine = create_engine(CONNECTION_STRING)
+Session = sessionmaker(bind=engine)

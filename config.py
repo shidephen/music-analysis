@@ -27,4 +27,4 @@ SCORES_MATRIX_SUFFIX = '_scores.txt'
 CHROMA_PATH = r'D:\Last\Temp'
 
 # database connection
-CONNECTION_STRING = 'mysql://root:tuya2016@localhost/musicdb'
+CONNECTION_STRING = 'mysql://root:tuya2016@localhost/music_db'
