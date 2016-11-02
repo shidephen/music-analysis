@@ -6,12 +6,13 @@ Created on Sun Sep 18 17:01:37 2016
 """
 
 # Output directories
-MUSIC_PATH = r'D:\Last\Songs'
-CLIP_PATH = r'D:\Last\Clips'
-CHORD_PATH = r'D:\Last\Songs'
-BEAT_PATH = r'D:\Last\Songs'
-MATRIX_PATH = r'D:\Last\Data'
-MUSIC_INFO_PATH = r'D:\Last\Songs'
+PARENT_DIR = r'D:\Last'
+MUSIC_PATH = PARENT_DIR + r'\Songs'
+CLIP_PATH = PARENT_DIR + r'\Clips'
+CHORD_PATH = PARENT_DIR + r'\Songs'
+BEAT_PATH = PARENT_DIR + r'\Songs'
+MATRIX_PATH = PARENT_DIR + r'\Data'
+MUSIC_INFO_PATH = PARENT_DIR + r'\Songs'
 
 # Naming suffices
 CHROMA_SUFFIX = '_chroma.csv'
@@ -24,7 +25,7 @@ ID_MATRIX_SUFFIX = '_clips.txt'
 SCORES_MATRIX_SUFFIX = '_scores.txt'
 
 # Temparay data directories
-CHROMA_PATH = r'D:\Last\Temp'
+CHROMA_PATH = PARENT_DIR + r'\Temp'
 
 # database connection
 CONNECTION_STRING = 'mysql://root:tuya2016@localhost/music_db'
