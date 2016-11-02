@@ -173,10 +173,10 @@ def process_clip(clip_path):
         notes = notes[0]
 
     # get detect key info
-    key = notes.analyze('key').name.split(' ')
-    key_name = key[0]
-    tonality = key[1]
-    key_num = np.where(music21_tone_map == key_name)[0][0]
+    key = notes.analyze('key')
+    key_name = key.tonic.name
+    tonality = key.mode
+    key_num = music21_tone_dict[key_name]
 
     if tonality.find('minor') >= 0:
         key_num = (key_num + 3) % 12
@@ -214,7 +214,8 @@ def process_clip(clip_path):
         midi_path = os.path.join(CLIP_PATH, midi_filename)
 
         converted_midi = construct_midi(clips[i], bpm)
-        mf = midi.translate.streamToMidiFile(converted_midi)
+        #mf = midi.translate.streamToMidiFile(converted_midi)
+        mf = midi.translate.streamToMidiFile(clips[i])
         mf.open(midi_path, 'wb')
         mf.write()
         mf.close()
