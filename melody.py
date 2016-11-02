@@ -129,7 +129,7 @@ def match_melody_clips(clips, chords, climax_info, count):
 
     bin_size = climax_len / grain
 
-    C = np.zeros((len(clips), bin_size))  # clips id matrix
+    C = np.zeros((len(clips), bin_size), dtype=np.int)  # clips id matrix
     S = np.zeros(C.shape)  # scores matrix corresponding to C
 
     clip_weights = np.zeros(len(clips))
@@ -149,8 +149,11 @@ def match_melody_clips(clips, chords, climax_info, count):
         for j in range(len(clips)):
             C[j, i/grain] = clips[j].clip_id # fill in clip id
             # default: notes in the 1st part of midi file
-            clip_notes = midi.translate.midiFilePathToStream(clips[j].path)[0]
-            S[j, i/grain] = np.exp(-clip_weights[j]) * score_melody_clip(clip_notes, chords)
+            try:
+                clip_notes = midi.translate.midiFilePathToStream(clips[j].path)[0]
+                S[j, i/grain] = np.exp(-clip_weights[j]) * score_melody_clip(clip_notes, chords)
+            except:
+                S[j, i / grain] = 0
 
         i_chord += grain
 
