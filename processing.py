@@ -78,7 +78,7 @@ def process_music(music_path, info_path, style):
     # Estimate chords
     chords = extract_chord_seq(basschroma, beatline, key)
     chord_path = os.path.join(CHORD_PATH, music_name+CHORD_SUFFIX)
-    np.savetxt(chord_path, chords)
+    np.savetxt(chord_path, chords, fmt='%d')
 
     # connect to database
     session = None
@@ -102,8 +102,8 @@ def process_music(music_path, info_path, style):
     Cmatrix_path = os.path.join(MATRIX_PATH, music_name+ID_MATRIX_SUFFIX)
     Smatrix_path = os.path.join(MATRIX_PATH, music_name+SCORES_MATRIX_SUFFIX)
 
-    np.savetxt(Cmatrix_path, C)
-    np.savetxt(Smatrix_path, S)
+    np.savetxt(Cmatrix_path, C, fmt='%d')
+    np.savetxt(Smatrix_path, S, fmt='%.4f')
 
     # copy music to music directory
     music_storage_path = os.path.join(MUSIC_PATH, music_name+'.wav')
