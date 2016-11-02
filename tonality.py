@@ -103,11 +103,11 @@ def detect_tonality(chroma, norm_ord=None):
         
     scores = np.array(scores)
     
-    print('Scores: \n%s\n%s\n' % (tone_map, scores))
+    # print('Scores: \n%s\n%s\n' % (tone_map, scores))
     
     sorted_idx = np.argsort(-scores)
     
-    print('Sorted:\n %s\n%s\n' % (tone_map[sorted_idx], scores[sorted_idx]))
+    # print('Sorted:\n %s\n%s\n' % (tone_map[sorted_idx], scores[sorted_idx]))
     
     # sorted_idx = np.argsort(chroma_sum)
     root = np.argmax(scores)
