@@ -64,4 +64,4 @@ def extract_chord_seq(basschroma, beatline, key, bar_size=4):
 
         b += bar_size
 
-    return np.array([beats_seq, chords_seq]).T
+    return np.array([beats_seq, chords_seq], dtype=np.int).T
