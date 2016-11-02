@@ -84,9 +84,7 @@ def detect_tonality(chroma, norm_ord=None):
     """
     chroma = chroma[:, 1:]
     if norm_ord is None:        
-        chroma_sum = np.mean(chroma)
-        chroma_sum = chroma_sum[1:]
-        chroma_sum = np.array(chroma_sum)
+        chroma_sum = np.mean(chroma, axis=0)
     else:
         chroma_sum = np.empty([12])
         for c in chroma:
